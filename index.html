@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test PI Vision Symbol</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: lightblue;
+      }
+      #symbol-container {
+        background: transparent;
+        width: 80%;
+        height: 80vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="symbol-container"></div>
+    <script src="libs/three.min.js"></script>
+    <script src="libs/OrbitControls.js"></script>
+    <!-- Mock PI Vision symbolCatalog -->
+    <script src="libs/three.min.js"></script>
+    <script src="libs/OrbitControls.js"></script>
+
+    <script>
+      window.PIVisualization = {
+        symbolCatalog: {
+          register: function (def) {
+            console.log("Symbol registered:", def);
+            const instance = new def.init();
+            const container = document.getElementById("symbol-container");
+            instance.init({}, container);
+
+            // ✅ Simulate PI data going from 0 to 100
+            let val = 0;
+            function simulateData() {
+              if (val > 100) return;
+              if (typeof instance.dataUpdate === "function") {
+                instance.dataUpdate({}, { Value: val });
+              }
+              val++;
+              setTimeout(simulateData, 50);
+            }
+            simulateData();
+          },
+        },
+      };
+    </script>
+
+    <script src="mySymbol.js"></script>
+
+    <!-- Your symbol code -->
+
+    <script src="mySymbol.js"></script>
+  </body>
+</html>
